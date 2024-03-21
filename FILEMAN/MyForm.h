@@ -10,6 +10,8 @@ namespace FILEMAN {
 	using namespace System::Drawing;
 	using namespace System::IO;
 
+	/// dob izm
+
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>
