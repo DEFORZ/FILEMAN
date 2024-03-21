@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 namespace FILEMAN {
 
@@ -8,9 +8,10 @@ namespace FILEMAN {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace System::IO;
 
 	/// <summary>
-	/// Сводка для MyForm
+	/// РЎРІРѕРґРєР° РґР»СЏ MyForm
 	/// </summary>
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
@@ -19,13 +20,13 @@ namespace FILEMAN {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~MyForm()
 		{
@@ -34,8 +35,21 @@ namespace FILEMAN {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^ Label_T1;
-	private: System::Windows::Forms::Button^ button_main1;
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
+	private: System::Windows::Forms::TextBox^ textBoxFileContent;
+	protected:
+
+	private: System::Windows::Forms::Button^ buttonOpenFile;
+	private: System::Windows::Forms::Button^ buttonSaveFile;
+	private: System::Windows::Forms::TextBox^ textBoxSearch;
+	private: System::Windows::Forms::Button^ buttonSearch;
+
+
+
+	protected:
+
+
+
 	protected:
 
 	protected:
@@ -47,48 +61,81 @@ namespace FILEMAN {
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->Label_T1 = (gcnew System::Windows::Forms::Label());
-			this->button_main1 = (gcnew System::Windows::Forms::Button());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->textBoxFileContent = (gcnew System::Windows::Forms::TextBox());
+			this->buttonOpenFile = (gcnew System::Windows::Forms::Button());
+			this->buttonSaveFile = (gcnew System::Windows::Forms::Button());
+			this->textBoxSearch = (gcnew System::Windows::Forms::TextBox());
+			this->buttonSearch = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
-			// Label_T1
+			// openFileDialog1
 			// 
-			this->Label_T1->AutoSize = true;
-			this->Label_T1->Location = System::Drawing::Point(26, 9);
-			this->Label_T1->Name = L"Label_T1";
-			this->Label_T1->Size = System::Drawing::Size(35, 13);
-			this->Label_T1->TabIndex = 0;
-			this->Label_T1->Text = L"TEXT";
-			this->Label_T1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
+			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
-			// button_main1
+			// textBoxFileContent
 			// 
-			this->button_main1->Location = System::Drawing::Point(12, 35);
-			this->button_main1->Name = L"button_main1";
-			this->button_main1->Size = System::Drawing::Size(67, 23);
-			this->button_main1->TabIndex = 1;
-			this->button_main1->Text = L"KNOPKA";
-			this->button_main1->UseVisualStyleBackColor = true;
-			this->button_main1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			this->textBoxFileContent->Location = System::Drawing::Point(33, 12);
+			this->textBoxFileContent->Name = L"textBoxFileContent";
+			this->textBoxFileContent->Size = System::Drawing::Size(171, 20);
+			this->textBoxFileContent->TabIndex = 0;
+			// 
+			// buttonOpenFile
+			// 
+			this->buttonOpenFile->Location = System::Drawing::Point(210, 10);
+			this->buttonOpenFile->Name = L"buttonOpenFile";
+			this->buttonOpenFile->Size = System::Drawing::Size(75, 23);
+			this->buttonOpenFile->TabIndex = 1;
+			this->buttonOpenFile->Text = L"open";
+			this->buttonOpenFile->UseVisualStyleBackColor = true;
+			// 
+			// buttonSaveFile
+			// 
+			this->buttonSaveFile->Location = System::Drawing::Point(33, 58);
+			this->buttonSaveFile->Name = L"buttonSaveFile";
+			this->buttonSaveFile->Size = System::Drawing::Size(75, 23);
+			this->buttonSaveFile->TabIndex = 2;
+			this->buttonSaveFile->Text = L"save";
+			this->buttonSaveFile->UseVisualStyleBackColor = true;
+			this->buttonSaveFile->Click += gcnew System::EventHandler(this, &MyForm::button1_Click);
+			// 
+			// textBoxSearch
+			// 
+			this->textBoxSearch->Location = System::Drawing::Point(673, 12);
+			this->textBoxSearch->Name = L"textBoxSearch";
+			this->textBoxSearch->Size = System::Drawing::Size(215, 20);
+			this->textBoxSearch->TabIndex = 3;
+			// 
+			// buttonSearch
+			// 
+			this->buttonSearch->Location = System::Drawing::Point(592, 12);
+			this->buttonSearch->Name = L"buttonSearch";
+			this->buttonSearch->Size = System::Drawing::Size(75, 23);
+			this->buttonSearch->TabIndex = 4;
+			this->buttonSearch->Text = L"search";
+			this->buttonSearch->UseVisualStyleBackColor = true;
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(391, 236);
-			this->Controls->Add(this->button_main1);
-			this->Controls->Add(this->Label_T1);
+			this->ClientSize = System::Drawing::Size(920, 367);
+			this->Controls->Add(this->buttonSearch);
+			this->Controls->Add(this->textBoxSearch);
+			this->Controls->Add(this->buttonSaveFile);
+			this->Controls->Add(this->buttonOpenFile);
+			this->Controls->Add(this->textBoxFileContent);
 			this->Name = L"MyForm";
 			this->Text = L"FILEMAN";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -99,11 +146,8 @@ namespace FILEMAN {
 #pragma endregion
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
-	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
-		
-	}
-	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-		this->Label_T1->Text = "Some new";
-	}
-	};
+
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+};
 }
