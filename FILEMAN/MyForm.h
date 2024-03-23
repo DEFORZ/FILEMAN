@@ -101,6 +101,7 @@ namespace FILEMAN {
 			this->buttonOpenFile->TabIndex = 1;
 			this->buttonOpenFile->Text = L"open";
 			this->buttonOpenFile->UseVisualStyleBackColor = true;
+			this->buttonOpenFile->Click += gcnew System::EventHandler(this, &MyForm::buttonOpenFile_Click);
 			// 
 			// buttonSaveFile
 			// 
@@ -127,6 +128,7 @@ namespace FILEMAN {
 			this->buttonSearch->TabIndex = 4;
 			this->buttonSearch->Text = L"search";
 			this->buttonSearch->UseVisualStyleBackColor = true;
+			this->buttonSearch->Click += gcnew System::EventHandler(this, &MyForm::buttonSearch_Click);
 			// 
 			// MyForm
 			// 
@@ -149,7 +151,69 @@ namespace FILEMAN {
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
 	}
 
-private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {       ///SAVE
+
+	SaveFileDialog^ saveFileDialog1 = gcnew SaveFileDialog();
+	saveFileDialog1->Filter = "Text Files|*.txt|All Files|*.*";
+	saveFileDialog1->FilterIndex = 1;
+
+	if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		String^ fileName = saveFileDialog1->FileName;
+		try
+		{
+			StreamWriter^ sw = gcnew StreamWriter(fileName);
+			sw->Write(textBoxFileContent->Text);
+			sw->Close();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error: Could not save file to disk. Original error: " + ex->Message);
+		}
+	}
 }
+private: System::Void buttonOpenFile_Click(System::Object^ sender, System::EventArgs^ e) {   
+
+	openFileDialog1->Filter = "Text Files|*.txt|All Files|*.*";
+	openFileDialog1->FilterIndex = 1;
+
+	if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		String^ fileName = openFileDialog1->FileName;
+		try
+		{
+			StreamReader^ sr = gcnew StreamReader(fileName);
+			textBoxFileContent->Text = sr->ReadToEnd();
+			sr->Close();
+		}
+		catch (Exception^ ex)
+		{
+			MessageBox::Show("Error: Could not read file from disk. Original error: " + ex->Message);
+		}
+	}
+}
+private: System::Void buttonSearch_Click(System::Object^ sender, System::EventArgs^ e) {
+
+	String^ searchText = textBoxSearch->Text;
+	String^ fileContent = textBoxFileContent->Text;
+
+	int index = fileContent->IndexOf(searchText);
+	if (index != -1)
+	{
+		textBoxFileContent->Select(index, searchText->Length);
+		textBoxFileContent->Focus();
+	}
+	else
+	{
+		MessageBox::Show("Search text not found.");
+	}
+}
+	   int main(array<System::String^>^ args)
+	   {
+		   Application::EnableVisualStyles();
+		   Application::SetCompatibleTextRenderingDefault(false);
+		   Application::Run(gcnew MyForm());
+		   return 0;
+	   }
 };
 }
